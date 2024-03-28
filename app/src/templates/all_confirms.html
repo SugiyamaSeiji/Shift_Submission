@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block style %}
+<style>
+td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white; /* 他のセルに覆いかぶさらないように背景を透明にする */
+}
+th:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white; /* 他のセルに覆いかぶさらないように背景を透明にする */
+}
+.equal-width {
+    width: 50%; /* セレクトボックスとボタンの幅を等しくするための幅指定 */
+    display: inline-block;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">シフト確認({{ month }}月)</h2>
+
+    <form action="/all_confirms" method="POST">
+        <div class="input-group mb-3">
+            <select id="topDownSelect" class="form-select equal-width"  name="month">
+                <option>月</option>
+                {% for i in range(1, 13) %}
+                    <option value=" {{ i }}">{{ i }}月</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-outline-info equal-width">
+                確認 <img src="{{ url_for('static', filename='ramen.png')}}" alt="決定">
+            </button>
+    
+        </div>
+    </form>
+    <div class="card-body">
+        <div class="table-responsive">
+            {{ to_tabled | safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

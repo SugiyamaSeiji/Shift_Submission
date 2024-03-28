@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block style %}
+{% endblock %}
+{% block content %}
+<style>
+
+td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white; /* 他のセルに覆いかぶさらないように背景を透明にする */
+}
+th:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white; /* 他のセルに覆いかぶさらないように背景を透明にする */
+}
+</style>
+<div class="container mt-4">
+    <h2 class="text-center">シフト確認({{ month }}月)</h2>
+    <div class="card-body">
+        <div class="table-responsive">
+            {{ to_tabled | safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}
