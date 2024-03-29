@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+    <div class="card px-1 py-4" style="width: 80%;">
+        <div class="card-body">
+            <h3 class="card-title mb-3">シフト入力</h3>
+
+            <form method="POST">
+                <input id="start" name="start" type="date">
+                <input id="end" name="end" type="date">
+                <button type="submit" class="btn btn-primary">決定</button>
+            </form>
+            
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="alert alert-danger" role="alert">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        {% if dates and weeks%}
+            <form action="{{url_for('confirm_shifts',id=employee.id)}}" method="POST">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">日付</th>
+                            <th scope="col">時間指定</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(diff) %}
+                        <tr>
+                            <th scope="row">{{ dates[i][5:]+'('+weeks[i]+')' }}</th>
+                            <td>
+                                <div class="btn-group">
+                                    <input class="btn-check" type="radio" name="{{dates[i]}}" id="{{dates[i]}}-1" value="1">
+                                    <label class="btn btn-outline-primary" for="{{dates[i]}}-1">×</label>
+                                </div>
+                                <div class="btn-group">
+                                    <input class="btn-check" type="radio" name="{{dates[i]}}" id="{{dates[i]}}-2" value="2">
+                                    <label class="btn btn-outline-primary" for="{{dates[i]}}-2">昼</label>
+                                </div>
+                                <div class="btn-group">
+                                    <input class="btn-check" type="radio" name="{{dates[i]}}" id="{{dates[i]}}-3" value="3">
+                                    <label class="btn btn-outline-primary" for="{{dates[i]}}-3">夜</label>
+                                </div>
+                                <div class="btn-group">
+                                    <input class="btn-check" type="radio" name="{{dates[i]}}" id="{{dates[i]}}-4" value="4">
+                                    <label class="btn btn-outline-primary" for="{{dates[i]}}-4">17</label>
+                                </div>
+                                <div class="btn-group">
+                                    <input class="btn-check" type="radio" name="{{dates[i]}}" id="{{dates[i]}}-5" value="5">
+                                    <label class="btn btn-outline-primary" for="{{dates[i]}}-5">18</label>
+                                </div>
+                                <div class="btn-group">
+                                    <input class="btn-check" type="radio" name="{{dates[i]}}" id="{{dates[i]}}-6" value="6">
+                                    <label class="btn btn-outline-primary" for="{{dates[i]}}-6">w</label>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                    </tbody>
+                </table>
+                    <div class="text-center" >
+                        <button type="submit" class="btn btn-primary">入力完了</button>
+                    </div>
+            </form>    
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
